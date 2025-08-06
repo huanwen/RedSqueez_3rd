@@ -27,7 +27,7 @@ struct ContentView: View {
             ScrollView([.vertical, .horizontal], showsIndicators: false) {
                 ZStack(alignment: .topLeading) {
                     // ✅ 红色背景 + 自动拉伸尺寸
-                    Color.whiteRe
+                    Color.white
                         .frame(
                             width: canvasSize.width,
                             height: canvasSize.height
