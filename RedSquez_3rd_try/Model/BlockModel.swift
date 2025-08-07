@@ -8,8 +8,8 @@
 import SwiftUI
 
 /// Block 数据模型
-struct BlockModel: Identifiable {
-    let id: UUID = UUID()
+struct BlockModel: Identifiable, Equatable {
+    var id: UUID = UUID()
     var type: BlockType
     var name: String?
     var offset: CGSize = .zero   // 拖动偏移，用于渲染位置

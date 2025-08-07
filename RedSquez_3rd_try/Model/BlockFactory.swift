@@ -16,7 +16,7 @@ struct BlockFactory {
             name: "LED",
             dropdownOptions: ["on", "off"],
             selectedOption: "on",
-            hasInputField: false,
+            hasInputField: true,
             inputValue: nil
         )
     }

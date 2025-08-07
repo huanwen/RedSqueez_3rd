@@ -41,6 +41,22 @@ struct BlockItemView: View {
                             .onEnded { value in
                                 block.offset.width = max(0, block.offset.width + value.translation.width)
                                 block.offset.height = max(0, block.offset.height + value.translation.height)
+                                // 2. 检查吸附
+                                    if let target = DragSnapLogic.findSnapTarget(for: block, among: allBlocks) {
+                                        DragSnapLogic.snap(block, to: target, in: &allBlocks)
+                                        print("✅ 吸附成功：\(block.name ?? "") → \(target.name ?? "")")
+                                    } else {
+                                        // 3. ❗️未吸附到任何目标时，说明是从链中拖出，要断开原链
+                                        if let parentIndex = allBlocks.firstIndex(where: { $0.nextID == block.id }) {
+                                            allBlocks[parentIndex].nextID = nil
+                                            print("✂️ 断开：\(allBlocks[parentIndex].name ?? "") ❌→ \(block.name ?? "")")
+                                        }
+                                    }
+
+                                // 4. ✅ 打印当前所有链
+                                printAllChains(from: allBlocks)
+                               
+                            
                             }
                     )
                     .onTapGesture {

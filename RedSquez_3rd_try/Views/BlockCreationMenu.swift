@@ -1,34 +1,34 @@
-//
-//  BlockCreationMenu.swift
-//  RedSquez_3rd_try
-//
-//  Created by mi mi on 8/5/25.
-//
-
 import SwiftUI
 
 struct BlockCreationMenu: View {
     var onAddBlock: (BlockModel) -> Void
 
+    // 未来可扩展更多 block 类型
+    private let blockTypes: [(title: String, factory: () -> BlockModel)] = [
+        ("LED", BlockFactory.makeLEDAction),
+        ("Wait", BlockFactory.makeWaitAction)
+        // 可继续加更多类型
+    ]
+
     var body: some View {
-        HStack {
-            Spacer()
-            Menu("➕ 添加 Block") {
-                Button("LED") {
-                    let newBlock = BlockFactory.makeLEDAction()
-                    onAddBlock(newBlock)
-                }
-                Button("Wait") {
-                    let newBlock = BlockFactory.makeWaitAction()
-                    onAddBlock(newBlock)
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 12) {
+                ForEach(blockTypes, id: \.title) { item in
+                    Button(action: {
+                        onAddBlock(item.factory())
+                    }) {
+                        Text(item.title)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Color.blue.opacity(0.2))
+                            .foregroundColor(.blue)
+                            .cornerRadius(8)
+                    }
                 }
             }
-            .padding()
-            .background(Color.blue.opacity(0.1))
-            .cornerRadius(8)
-            Spacer()
+            .padding(.horizontal)
         }
-        .padding(.bottom, 12)
+        .padding(.vertical, 12)
         .background(Color(UIColor.systemGray6))
     }
 }

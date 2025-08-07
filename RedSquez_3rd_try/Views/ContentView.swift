@@ -44,9 +44,10 @@ struct ContentView: View {
                         selectedBlockID: $selectedBlockID
                     )
                 }
+                
                 .padding()
             }
-
+           
             // ✅ 固定底部菜单
             BlockCreationMenu { newBlock in
                 var block = newBlock
